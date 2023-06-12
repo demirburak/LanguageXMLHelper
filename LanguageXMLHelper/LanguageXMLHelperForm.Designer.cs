@@ -41,10 +41,10 @@
             txtTurkish = new TextBox();
             txtEnglishRoot = new TextBox();
             panel2 = new Panel();
+            linkLabel1 = new LinkLabel();
             dgv = new DataGridView();
             saveFileDialog1 = new SaveFileDialog();
             panel3 = new Panel();
-            label4 = new Label();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv).BeginInit();
@@ -159,12 +159,22 @@
             // 
             // panel2
             // 
-            panel2.Controls.Add(label4);
+            panel2.Controls.Add(linkLabel1);
             panel2.Dock = DockStyle.Bottom;
             panel2.Location = new Point(0, 637);
             panel2.Name = "panel2";
             panel2.Size = new Size(1008, 30);
             panel2.TabIndex = 1;
+            // 
+            // linkLabel1
+            // 
+            linkLabel1.AutoSize = true;
+            linkLabel1.Location = new Point(3, 3);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(359, 20);
+            linkLabel1.TabIndex = 9;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "https://github.com/demirburak/LanguageXMLHelper";
             // 
             // dgv
             // 
@@ -192,15 +202,6 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(1008, 361);
             panel3.TabIndex = 2;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(839, 3);
-            label4.Name = "label4";
-            label4.Size = new Size(157, 20);
-            label4.TabIndex = 8;
-            label4.Text = "Programmed By Burak";
             // 
             // LanguageXMLHelperForm
             // 
@@ -238,7 +239,7 @@
         private Button btnClean;
         private Button btnSaveTextFile;
         private SaveFileDialog saveFileDialog1;
-        private Label label4;
         private Panel panel3;
+        private LinkLabel linkLabel1;
     }
 }
