@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace LanguageXMLHelper
@@ -133,6 +134,16 @@ namespace LanguageXMLHelper
             }
         }
 
+        private void lnkBtnGithubLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ProcessStartInfo ps = new()
+            {
+                FileName = "https://github.com/demirburak/LanguageXMLHelper",
+                UseShellExecute = true,
+                Verb = "open"
+            };
 
+            Process.Start(ps);
+        }
     }
 }

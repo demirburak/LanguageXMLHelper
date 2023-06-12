@@ -41,7 +41,7 @@
             txtTurkish = new TextBox();
             txtEnglishRoot = new TextBox();
             panel2 = new Panel();
-            linkLabel1 = new LinkLabel();
+            lnkBtnGithubLink = new LinkLabel();
             dgv = new DataGridView();
             saveFileDialog1 = new SaveFileDialog();
             panel3 = new Panel();
@@ -159,22 +159,23 @@
             // 
             // panel2
             // 
-            panel2.Controls.Add(linkLabel1);
+            panel2.Controls.Add(lnkBtnGithubLink);
             panel2.Dock = DockStyle.Bottom;
             panel2.Location = new Point(0, 637);
             panel2.Name = "panel2";
             panel2.Size = new Size(1008, 30);
             panel2.TabIndex = 1;
             // 
-            // linkLabel1
+            // lnkBtnGithubLink
             // 
-            linkLabel1.AutoSize = true;
-            linkLabel1.Location = new Point(3, 3);
-            linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(359, 20);
-            linkLabel1.TabIndex = 9;
-            linkLabel1.TabStop = true;
-            linkLabel1.Text = "https://github.com/demirburak/LanguageXMLHelper";
+            lnkBtnGithubLink.AutoSize = true;
+            lnkBtnGithubLink.Location = new Point(3, 3);
+            lnkBtnGithubLink.Name = "lnkBtnGithubLink";
+            lnkBtnGithubLink.Size = new Size(359, 20);
+            lnkBtnGithubLink.TabIndex = 9;
+            lnkBtnGithubLink.TabStop = true;
+            lnkBtnGithubLink.Text = "https://github.com/demirburak/LanguageXMLHelper";
+            lnkBtnGithubLink.LinkClicked += lnkBtnGithubLink_LinkClicked;
             // 
             // dgv
             // 
@@ -240,6 +241,6 @@
         private Button btnSaveTextFile;
         private SaveFileDialog saveFileDialog1;
         private Panel panel3;
-        private LinkLabel linkLabel1;
+        private LinkLabel lnkBtnGithubLink;
     }
 }
