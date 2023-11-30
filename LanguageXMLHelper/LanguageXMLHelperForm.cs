@@ -5,16 +5,52 @@ namespace LanguageXMLHelper
 {
     public partial class LanguageXMLHelperForm : Form
     {
+        string lineTypeDesc = "";
+        Dictionary<string, string> ltcontents = new();
+        List<ContentLine> contentLines = new();
+
         public LanguageXMLHelperForm()
         {
             InitializeComponent();
+
+            DefineLineType();
             AddColumns();
+            FillTheContents();
+        }
+
+        private void DefineLineType() => lineTypeDesc = (radioXML.Checked) ? "XML" : "JSON";
+
+        private void FillTheContents()
+        {
+            ltcontents.Add("XML_Begin", "<text name=\"");
+            ltcontents.Add("XML_Middle", "\">");
+            ltcontents.Add("XML_End", "</text>");
+            ltcontents.Add("JSON_Begin", "\"");
+            ltcontents.Add("JSON_Middle", "\": \"");
+            ltcontents.Add("JSON_End", "\"");
+        }
+
+        private string GetUuid()
+        {
+            string uuid;
+            do
+            {
+                uuid = Guid.NewGuid().ToString("N");
+            } while (contentLines.Any(x => x.Uuid == uuid));
+
+            return uuid;
         }
 
         private void AddColumns()
         {
-            dgv.Columns.Add("Turkish", "Turkish XML");
-            dgv.Columns.Add("English", "English XML");
+            dgv.Columns.Add("Id", "Id");
+            dgv.Columns[dgv.Columns.Count-1].Visible = false;
+            
+            dgv.Columns.Add("Turkish", $"Turkish");
+            dgv.Columns[dgv.Columns.Count - 1].Width = 300;
+
+            dgv.Columns.Add("English", $"English");
+            dgv.Columns[dgv.Columns.Count - 1].Width = 300;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -25,35 +61,27 @@ namespace LanguageXMLHelper
 
         private void InsertToDataGridView()
         {
-            txtTurkish.Text = Clean(txtTurkish.Text);
-            txtEnglish.Text = Clean(txtEnglish.Text);
-            string tr = $"<text name=\"{txtEnglishRoot.Text}\">{txtTurkish.Text}</text>";
-            string en = $"<text name=\"{txtEnglishRoot.Text}\">{txtEnglish.Text}</text>";
-            if (!string.IsNullOrWhiteSpace(txtTurkish.Text) || !string.IsNullOrWhiteSpace(txtEnglish.Text))
+            string uuid, trText, enText, enRoot;
+            trText = txtTurkish.Text = Clean(txtTurkish.Text);
+            enText = txtEnglish.Text = Clean(txtEnglish.Text);
+            enRoot = txtEnglishRoot.Text;
+            uuid = GetUuid();
+
+            if (string.IsNullOrWhiteSpace(trText) || string.IsNullOrWhiteSpace(enText) ||
+                contentLines.Any(x => x.Content == trText || x.Content == enText))
             {
-                dgv.Rows.Add(tr, en);
-                CleanDoubleRecords();
+                return;
             }
+
+            contentLines.Add(new ContentLine(uuid, "tr", enRoot, trText));
+            contentLines.Add(new ContentLine(uuid, "en", enRoot, enText));
+            dgv.Rows.Add(uuid, GetProcessedContent(enRoot, trText), GetProcessedContent(enRoot, enText));
 
         }
 
-        private void CleanDoubleRecords()
+        private string GetProcessedContent(string root, string content)
         {
-            List<(string, string)> list = new();
-            for (int i = dgv.Rows.Count - 1; i >= 0; i--)
-            {
-                (string, string) check = new();
-                check.Item1 = dgv.Rows[i].Cells["English"].Value.ToString();
-                check.Item2 = dgv.Rows[i].Cells["Turkish"].Value.ToString();
-                if (list.Contains(check))
-                {
-                    dgv.Rows.RemoveAt(i);
-                }
-                else
-                {
-                    list.Add(check);
-                }
-            }
+            return $"{ltcontents[$"{lineTypeDesc}_Begin"]}{root}{ltcontents[$"{lineTypeDesc}_Middle"]}{content}{ltcontents[$"{lineTypeDesc}_End"]}";
         }
 
         private string Clean(string text)
@@ -81,10 +109,10 @@ namespace LanguageXMLHelper
             string newRootName = "";
             foreach (var part in parts)
             {
-                string newPart = Regex.Replace(part.ToUpper(), "[^a-zA-Z]", "");
+                string newPart = Regex.Replace(part.ToUpper().Replace("Ý","I"), "[^a-zA-Z]", "");
                 if (!string.IsNullOrWhiteSpace(part))
                 {
-                    if (newPart.Length > 1) newPart = newPart[0].ToString().ToUpper() + newPart.Substring(1, newPart.Length - 1).ToLower();
+                    if (newPart.Length > 1) newPart = newPart[0].ToString() + newPart.Substring(1, newPart.Length - 1).ToLower().Replace("ý","i");
                     newRootName += newPart;
                 }
             }
@@ -111,7 +139,7 @@ namespace LanguageXMLHelper
 
                 using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
                 {
-                    sw.WriteLine("--- English Language XML ---");
+                    sw.WriteLine($"--- English Language {lineTypeDesc} ---");
                     sw.WriteLine();
 
                     foreach (DataGridViewRow dr in dgv.Rows)
@@ -120,7 +148,7 @@ namespace LanguageXMLHelper
                     }
 
                     sw.WriteLine();
-                    sw.WriteLine("--- Turkish Language XML ---");
+                    sw.WriteLine($"--- Turkish Language {lineTypeDesc} ---");
                     sw.WriteLine();
                     foreach (DataGridViewRow dr in dgv.Rows)
                     {
@@ -144,6 +172,32 @@ namespace LanguageXMLHelper
             };
 
             Process.Start(ps);
+        }
+
+        private void radios_CheckedChanged(object sender, EventArgs e)
+        {
+            DefineLineType();
+            FillDataGridViewFromList();
+        }
+
+        private void FillDataGridViewFromList()
+        {
+            dgv.Rows.Clear();
+            List<string> uuids = contentLines.Select(x => x.Uuid).Distinct().ToList();
+
+            foreach (var uuid in uuids)
+            {
+                ContentLine? trLine = contentLines.FirstOrDefault(x => x.Language == "tr" && x.Uuid == uuid);
+                ContentLine? enLine = contentLines.FirstOrDefault(x => x.Language == "en" && x.Uuid == uuid);
+
+                dgv.Rows.Add(uuid, GetProcessedContent(trLine.Root, trLine.Content), GetProcessedContent(enLine.Root, enLine.Content));
+            }
+        }
+
+        private void dgv_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            string uuid = e.Row.Cells["Id"].Value.ToString();
+            contentLines.RemoveAll(x => x.Uuid == uuid);
         }
     }
 }

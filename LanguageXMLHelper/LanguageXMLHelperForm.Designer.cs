@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LanguageXMLHelperForm));
             panel1 = new Panel();
+            radioJson = new RadioButton();
+            radioXML = new RadioButton();
             btnSaveTextFile = new Button();
             btnClean = new Button();
             btnCreateRootName = new Button();
@@ -53,6 +55,8 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(radioJson);
+            panel1.Controls.Add(radioXML);
             panel1.Controls.Add(btnSaveTextFile);
             panel1.Controls.Add(btnClean);
             panel1.Controls.Add(btnCreateRootName);
@@ -68,6 +72,30 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1008, 276);
             panel1.TabIndex = 0;
+            // 
+            // radioJson
+            // 
+            radioJson.AutoSize = true;
+            radioJson.Location = new Point(12, 246);
+            radioJson.Name = "radioJson";
+            radioJson.Size = new Size(96, 24);
+            radioJson.TabIndex = 8;
+            radioJson.Text = "JSON Line";
+            radioJson.UseVisualStyleBackColor = true;
+            radioJson.CheckedChanged += radios_CheckedChanged;
+            // 
+            // radioXML
+            // 
+            radioXML.AutoSize = true;
+            radioXML.Checked = true;
+            radioXML.Location = new Point(12, 217);
+            radioXML.Name = "radioXML";
+            radioXML.Size = new Size(90, 24);
+            radioXML.TabIndex = 7;
+            radioXML.TabStop = true;
+            radioXML.Text = "XML Line";
+            radioXML.UseVisualStyleBackColor = true;
+            radioXML.CheckedChanged += radios_CheckedChanged;
             // 
             // btnSaveTextFile
             // 
@@ -185,10 +213,12 @@
             dgv.Dock = DockStyle.Fill;
             dgv.Location = new Point(0, 0);
             dgv.Name = "dgv";
+            dgv.ReadOnly = true;
             dgv.RowHeadersWidth = 51;
             dgv.RowTemplate.Height = 29;
             dgv.Size = new Size(1008, 361);
             dgv.TabIndex = 6;
+            dgv.UserDeletingRow += dgv_UserDeletingRow;
             // 
             // saveFileDialog1
             // 
@@ -242,5 +272,7 @@
         private SaveFileDialog saveFileDialog1;
         private Panel panel3;
         private LinkLabel lnkBtnGithubLink;
+        private RadioButton radioJson;
+        private RadioButton radioXML;
     }
 }
