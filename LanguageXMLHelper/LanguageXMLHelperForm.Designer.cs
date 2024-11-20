@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LanguageXMLHelperForm));
             panel1 = new Panel();
+            btnTranslate = new Button();
+            btnSettings = new Button();
             radioJson = new RadioButton();
             radioXML = new RadioButton();
             btnSaveTextFile = new Button();
@@ -55,6 +57,8 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(btnTranslate);
+            panel1.Controls.Add(btnSettings);
             panel1.Controls.Add(radioJson);
             panel1.Controls.Add(radioXML);
             panel1.Controls.Add(btnSaveTextFile);
@@ -72,6 +76,27 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1008, 276);
             panel1.TabIndex = 0;
+            // 
+            // btnTranslate
+            // 
+            btnTranslate.Location = new Point(735, 69);
+            btnTranslate.Name = "btnTranslate";
+            btnTranslate.Size = new Size(119, 29);
+            btnTranslate.TabIndex = 10;
+            btnTranslate.Text = "Translate";
+            btnTranslate.UseVisualStyleBackColor = true;
+            btnTranslate.Visible = false;
+            btnTranslate.Click += btnTranslate_Click;
+            // 
+            // btnSettings
+            // 
+            btnSettings.Location = new Point(877, 29);
+            btnSettings.Name = "btnSettings";
+            btnSettings.Size = new Size(119, 29);
+            btnSettings.TabIndex = 9;
+            btnSettings.Text = "Settings";
+            btnSettings.UseVisualStyleBackColor = true;
+            btnSettings.Click += btnSettings_Click;
             // 
             // radioJson
             // 
@@ -109,7 +134,7 @@
             // 
             // btnClean
             // 
-            btnClean.Location = new Point(877, 34);
+            btnClean.Location = new Point(877, 69);
             btnClean.Name = "btnClean";
             btnClean.Size = new Size(119, 29);
             btnClean.TabIndex = 3;
@@ -119,7 +144,7 @@
             // 
             // btnCreateRootName
             // 
-            btnCreateRootName.Location = new Point(877, 73);
+            btnCreateRootName.Location = new Point(877, 107);
             btnCreateRootName.Name = "btnCreateRootName";
             btnCreateRootName.Size = new Size(119, 50);
             btnCreateRootName.TabIndex = 5;
@@ -129,9 +154,9 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(877, 133);
+            btnAdd.Location = new Point(877, 163);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(119, 69);
+            btnAdd.Size = new Size(119, 50);
             btnAdd.TabIndex = 4;
             btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = true;
@@ -149,7 +174,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(14, 73);
+            label2.Location = new Point(14, 78);
             label2.Name = "label2";
             label2.Size = new Size(56, 20);
             label2.TabIndex = 4;
@@ -166,7 +191,7 @@
             // 
             // txtEnglish
             // 
-            txtEnglish.Location = new Point(12, 96);
+            txtEnglish.Location = new Point(12, 101);
             txtEnglish.Name = "txtEnglish";
             txtEnglish.Size = new Size(842, 27);
             txtEnglish.TabIndex = 1;
@@ -180,6 +205,7 @@
             // 
             // txtEnglishRoot
             // 
+            txtEnglishRoot.BackColor = Color.LemonChiffon;
             txtEnglishRoot.Location = new Point(12, 175);
             txtEnglishRoot.Name = "txtEnglishRoot";
             txtEnglishRoot.Size = new Size(842, 27);
@@ -199,10 +225,10 @@
             lnkBtnGithubLink.AutoSize = true;
             lnkBtnGithubLink.Location = new Point(3, 3);
             lnkBtnGithubLink.Name = "lnkBtnGithubLink";
-            lnkBtnGithubLink.Size = new Size(359, 20);
+            lnkBtnGithubLink.Size = new Size(93, 20);
             lnkBtnGithubLink.TabIndex = 9;
             lnkBtnGithubLink.TabStop = true;
-            lnkBtnGithubLink.Text = "https://github.com/demirburak/LanguageXMLHelper";
+            lnkBtnGithubLink.Text = "[Github Link]";
             lnkBtnGithubLink.LinkClicked += lnkBtnGithubLink_LinkClicked;
             // 
             // dgv
@@ -274,5 +300,7 @@
         private LinkLabel lnkBtnGithubLink;
         private RadioButton radioJson;
         private RadioButton radioXML;
+        private Button btnSettings;
+        private Button btnTranslate;
     }
 }

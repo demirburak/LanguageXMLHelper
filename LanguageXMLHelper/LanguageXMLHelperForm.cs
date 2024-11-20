@@ -1,4 +1,9 @@
+using LanguageXMLHelper.TranslateAPIs;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace LanguageXMLHelper
@@ -12,10 +17,17 @@ namespace LanguageXMLHelper
         public LanguageXMLHelperForm()
         {
             InitializeComponent();
+            FillCredits();
 
             DefineLineType();
             AddColumns();
             FillTheContents();
+        }
+
+        private void FillCredits()
+        {
+            lnkBtnGithubLink.Text = AppConsts.GithubLink;
+            this.Text += $" - Version : {AppConsts.AppVersion}";
         }
 
         private void DefineLineType() => lineTypeDesc = (radioXML.Checked) ? "XML" : "JSON";
@@ -44,8 +56,8 @@ namespace LanguageXMLHelper
         private void AddColumns()
         {
             dgv.Columns.Add("Id", "Id");
-            dgv.Columns[dgv.Columns.Count-1].Visible = false;
-            
+            dgv.Columns[dgv.Columns.Count - 1].Visible = false;
+
             dgv.Columns.Add("Turkish", $"Turkish");
             dgv.Columns[dgv.Columns.Count - 1].Width = 300;
 
@@ -109,13 +121,14 @@ namespace LanguageXMLHelper
             string newRootName = "";
             foreach (var part in parts)
             {
-                string newPart = Regex.Replace(part.ToUpper().Replace("Ý","I"), "[^a-zA-Z]", "");
+                string newPart = Regex.Replace(part.ToUpper().Replace("Ý", "I"), "[^a-zA-Z]", "");
                 if (!string.IsNullOrWhiteSpace(part))
                 {
-                    if (newPart.Length > 1) newPart = newPart[0].ToString() + newPart.Substring(1, newPart.Length - 1).ToLower().Replace("ý","i");
+                    if (newPart.Length > 1) newPart = newPart[0].ToString() + newPart.Substring(1, newPart.Length - 1).ToLower().Replace("ý", "i");
                     newRootName += newPart;
                 }
             }
+            newRootName = $"{AppSettings.Prefix}{newRootName}{AppSettings.Suffix}";
             return newRootName;
         }
 
@@ -166,7 +179,7 @@ namespace LanguageXMLHelper
         {
             ProcessStartInfo ps = new()
             {
-                FileName = "https://github.com/demirburak/LanguageXMLHelper",
+                FileName = AppConsts.GithubLink,
                 UseShellExecute = true,
                 Verb = "open"
             };
@@ -199,5 +212,20 @@ namespace LanguageXMLHelper
             string uuid = e.Row.Cells["Id"].Value.ToString();
             contentLines.RemoveAll(x => x.Uuid == uuid);
         }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsForm = new SettingsForm();
+            settingsForm.ShowDialog();
+
+            btnTranslate.Visible = AppSettings.HasTranslate;
+        }
+
+        private void btnTranslate_Click(object sender, EventArgs e)
+        {
+            ITranslateAPI translator = TranslateAPIBuilder.Build(ApiSource.Test);
+            txtEnglish.Text = translator.TranslateTrToEn(txtTurkish.Text);
+        }
+
     }
 }
