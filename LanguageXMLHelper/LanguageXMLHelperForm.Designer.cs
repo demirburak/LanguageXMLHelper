@@ -79,11 +79,11 @@
             // 
             // btnTranslate
             // 
-            btnTranslate.Location = new Point(735, 69);
+            btnTranslate.Location = new Point(680, 69);
             btnTranslate.Name = "btnTranslate";
-            btnTranslate.Size = new Size(119, 29);
+            btnTranslate.Size = new Size(174, 29);
             btnTranslate.TabIndex = 10;
-            btnTranslate.Text = "Translate";
+            btnTranslate.Text = "Translation Shortcut";
             btnTranslate.UseVisualStyleBackColor = true;
             btnTranslate.Visible = false;
             btnTranslate.Click += btnTranslate_Click;

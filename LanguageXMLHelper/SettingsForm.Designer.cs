@@ -126,9 +126,9 @@
             label3.AutoSize = true;
             label3.Location = new Point(8, 152);
             label3.Name = "label3";
-            label3.Size = new Size(104, 20);
+            label3.Size = new Size(163, 20);
             label3.TabIndex = 7;
-            label3.Text = "Translation Url";
+            label3.Text = "Translation Shortcut Url";
             // 
             // txtTranslationUrl
             // 
