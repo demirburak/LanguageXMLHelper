@@ -27,6 +27,7 @@ namespace LanguageXMLHelper
             txtSuffix.Text = AppSettings.Suffix;
             txtPrefix.Text = AppSettings.Prefix;
             chcHasTranslate.Checked = AppSettings.HasTranslate;
+            txtTranslationUrl.Text = AppSettings.TranslateUrl;
         }
 
         private void SaveSettings()
@@ -34,6 +35,7 @@ namespace LanguageXMLHelper
             AppSettings.Suffix = txtSuffix.Text;
             AppSettings.Prefix = txtPrefix.Text;
             AppSettings.HasTranslate = chcHasTranslate.Checked;
+            AppSettings.TranslateUrl = txtTranslationUrl.Text;
         }
 
         private void btnClose_Click(object sender, EventArgs e)

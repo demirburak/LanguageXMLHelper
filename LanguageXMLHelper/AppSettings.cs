@@ -13,5 +13,8 @@ namespace LanguageXMLHelper
         public static string Suffix = string.Empty;
 
         public static bool HasTranslate = false;
+
+        public static string TranslateUrl = string.Empty;
+
     }
 }

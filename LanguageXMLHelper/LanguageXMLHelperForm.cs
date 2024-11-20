@@ -1,9 +1,4 @@
-using LanguageXMLHelper.TranslateAPIs;
 using System.Diagnostics;
-using System.Net;
-using System.Net.Http.Json;
-using System.Text;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace LanguageXMLHelper
@@ -177,14 +172,7 @@ namespace LanguageXMLHelper
 
         private void lnkBtnGithubLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            ProcessStartInfo ps = new()
-            {
-                FileName = AppConsts.GithubLink,
-                UseShellExecute = true,
-                Verb = "open"
-            };
-
-            Process.Start(ps);
+            OpenLink(AppConsts.GithubLink);
         }
 
         private void radios_CheckedChanged(object sender, EventArgs e)
@@ -223,9 +211,24 @@ namespace LanguageXMLHelper
 
         private void btnTranslate_Click(object sender, EventArgs e)
         {
-            ITranslateAPI translator = TranslateAPIBuilder.Build(ApiSource.Test);
-            txtEnglish.Text = translator.TranslateTrToEn(txtTurkish.Text);
+            if (string.IsNullOrEmpty(AppSettings.TranslateUrl))
+            {
+                MessageBox.Show("Translate URL is not defined.");
+            }
+            string url = $"{AppSettings.TranslateUrl}{txtTurkish.Text.Replace(" ", "%20")}";
+            OpenLink(url);
         }
 
+        private void OpenLink(string url)
+        {
+            ProcessStartInfo ps = new()
+            {
+                FileName = url,
+                UseShellExecute = true,
+                Verb = "open"
+            };
+
+            Process.Start(ps);
+        }
     }
 }
