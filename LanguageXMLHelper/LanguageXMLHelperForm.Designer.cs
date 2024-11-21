@@ -30,6 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LanguageXMLHelperForm));
             panel1 = new Panel();
+            btnEnPaste = new Button();
+            btnRootPaste = new Button();
+            btnTrPaste = new Button();
+            btnEnCopy = new Button();
+            btnRootCopy = new Button();
+            btnTrCopy = new Button();
             btnTranslate = new Button();
             btnSettings = new Button();
             radioJson = new RadioButton();
@@ -57,6 +63,12 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(btnEnPaste);
+            panel1.Controls.Add(btnRootPaste);
+            panel1.Controls.Add(btnTrPaste);
+            panel1.Controls.Add(btnEnCopy);
+            panel1.Controls.Add(btnRootCopy);
+            panel1.Controls.Add(btnTrCopy);
             panel1.Controls.Add(btnTranslate);
             panel1.Controls.Add(btnSettings);
             panel1.Controls.Add(radioJson);
@@ -74,8 +86,68 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1008, 276);
+            panel1.Size = new Size(1132, 276);
             panel1.TabIndex = 0;
+            // 
+            // btnEnPaste
+            // 
+            btnEnPaste.Location = new Point(921, 101);
+            btnEnPaste.Name = "btnEnPaste";
+            btnEnPaste.Size = new Size(55, 29);
+            btnEnPaste.TabIndex = 16;
+            btnEnPaste.Text = "Paste";
+            btnEnPaste.UseVisualStyleBackColor = true;
+            btnEnPaste.Click += btnEnPaste_Click;
+            // 
+            // btnRootPaste
+            // 
+            btnRootPaste.Location = new Point(921, 175);
+            btnRootPaste.Name = "btnRootPaste";
+            btnRootPaste.Size = new Size(55, 29);
+            btnRootPaste.TabIndex = 15;
+            btnRootPaste.Text = "Paste";
+            btnRootPaste.UseVisualStyleBackColor = true;
+            btnRootPaste.Click += btnRootPaste_Click;
+            // 
+            // btnTrPaste
+            // 
+            btnTrPaste.Location = new Point(921, 36);
+            btnTrPaste.Name = "btnTrPaste";
+            btnTrPaste.Size = new Size(55, 29);
+            btnTrPaste.TabIndex = 14;
+            btnTrPaste.Text = "Paste";
+            btnTrPaste.UseVisualStyleBackColor = true;
+            btnTrPaste.Click += btnTrPaste_Click;
+            // 
+            // btnEnCopy
+            // 
+            btnEnCopy.Location = new Point(860, 101);
+            btnEnCopy.Name = "btnEnCopy";
+            btnEnCopy.Size = new Size(55, 29);
+            btnEnCopy.TabIndex = 13;
+            btnEnCopy.Text = "Copy";
+            btnEnCopy.UseVisualStyleBackColor = true;
+            btnEnCopy.Click += btnEnCopy_Click;
+            // 
+            // btnRootCopy
+            // 
+            btnRootCopy.Location = new Point(860, 175);
+            btnRootCopy.Name = "btnRootCopy";
+            btnRootCopy.Size = new Size(55, 29);
+            btnRootCopy.TabIndex = 12;
+            btnRootCopy.Text = "Copy";
+            btnRootCopy.UseVisualStyleBackColor = true;
+            btnRootCopy.Click += btnRootCopy_Click;
+            // 
+            // btnTrCopy
+            // 
+            btnTrCopy.Location = new Point(860, 36);
+            btnTrCopy.Name = "btnTrCopy";
+            btnTrCopy.Size = new Size(55, 29);
+            btnTrCopy.TabIndex = 11;
+            btnTrCopy.Text = "Copy";
+            btnTrCopy.UseVisualStyleBackColor = true;
+            btnTrCopy.Click += btnTrCopy_Click;
             // 
             // btnTranslate
             // 
@@ -90,7 +162,7 @@
             // 
             // btnSettings
             // 
-            btnSettings.Location = new Point(877, 29);
+            btnSettings.Location = new Point(997, 29);
             btnSettings.Name = "btnSettings";
             btnSettings.Size = new Size(119, 29);
             btnSettings.TabIndex = 9;
@@ -124,7 +196,7 @@
             // 
             // btnSaveTextFile
             // 
-            btnSaveTextFile.Location = new Point(877, 220);
+            btnSaveTextFile.Location = new Point(997, 220);
             btnSaveTextFile.Name = "btnSaveTextFile";
             btnSaveTextFile.Size = new Size(119, 50);
             btnSaveTextFile.TabIndex = 6;
@@ -134,7 +206,7 @@
             // 
             // btnClean
             // 
-            btnClean.Location = new Point(877, 69);
+            btnClean.Location = new Point(997, 69);
             btnClean.Name = "btnClean";
             btnClean.Size = new Size(119, 29);
             btnClean.TabIndex = 3;
@@ -144,7 +216,7 @@
             // 
             // btnCreateRootName
             // 
-            btnCreateRootName.Location = new Point(877, 107);
+            btnCreateRootName.Location = new Point(997, 107);
             btnCreateRootName.Name = "btnCreateRootName";
             btnCreateRootName.Size = new Size(119, 50);
             btnCreateRootName.TabIndex = 5;
@@ -154,7 +226,7 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(877, 163);
+            btnAdd.Location = new Point(997, 163);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(119, 50);
             btnAdd.TabIndex = 4;
@@ -217,7 +289,7 @@
             panel2.Dock = DockStyle.Bottom;
             panel2.Location = new Point(0, 637);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1008, 30);
+            panel2.Size = new Size(1132, 30);
             panel2.TabIndex = 1;
             // 
             // lnkBtnGithubLink
@@ -242,7 +314,7 @@
             dgv.ReadOnly = true;
             dgv.RowHeadersWidth = 51;
             dgv.RowTemplate.Height = 29;
-            dgv.Size = new Size(1008, 361);
+            dgv.Size = new Size(1132, 361);
             dgv.TabIndex = 6;
             dgv.UserDeletingRow += dgv_UserDeletingRow;
             // 
@@ -257,14 +329,14 @@
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(0, 276);
             panel3.Name = "panel3";
-            panel3.Size = new Size(1008, 361);
+            panel3.Size = new Size(1132, 361);
             panel3.TabIndex = 2;
             // 
             // LanguageXMLHelperForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1008, 667);
+            ClientSize = new Size(1132, 667);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -302,5 +374,11 @@
         private RadioButton radioXML;
         private Button btnSettings;
         private Button btnTranslate;
+        private Button btnEnPaste;
+        private Button btnRootPaste;
+        private Button btnTrPaste;
+        private Button btnEnCopy;
+        private Button btnRootCopy;
+        private Button btnTrCopy;
     }
 }

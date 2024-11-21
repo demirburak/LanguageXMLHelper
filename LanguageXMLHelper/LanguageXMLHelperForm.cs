@@ -5,9 +5,9 @@ namespace LanguageXMLHelper
 {
     public partial class LanguageXMLHelperForm : Form
     {
-        string lineTypeDesc = "";
-        Dictionary<string, string> ltcontents = new();
-        List<ContentLine> contentLines = new();
+        private string lineTypeDesc = "";
+        private Dictionary<string, string> ltcontents = new();
+        private List<ContentLine> contentLines = new();
 
         public LanguageXMLHelperForm()
         {
@@ -83,7 +83,6 @@ namespace LanguageXMLHelper
             contentLines.Add(new ContentLine(uuid, "tr", enRoot, trText));
             contentLines.Add(new ContentLine(uuid, "en", enRoot, enText));
             dgv.Rows.Add(uuid, GetProcessedContent(enRoot, trText), GetProcessedContent(enRoot, enText));
-
         }
 
         private string GetProcessedContent(string root, string content)
@@ -144,7 +143,6 @@ namespace LanguageXMLHelper
             var result = saveFileDialog1.ShowDialog();
             if (result == DialogResult.OK)
             {
-
                 using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
                 {
                     sw.WriteLine($"--- English Language {lineTypeDesc} ---");
@@ -163,9 +161,7 @@ namespace LanguageXMLHelper
                         sw.WriteLine(dr.Cells["Turkish"].Value.ToString());
                     }
 
-
                     sw.Close();
-
                 }
             }
         }
@@ -229,6 +225,36 @@ namespace LanguageXMLHelper
             };
 
             Process.Start(ps);
+        }
+
+        private void btnTrCopy_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(txtTurkish.Text);
+        }
+
+        private void btnTrPaste_Click(object sender, EventArgs e)
+        {
+            txtTurkish.Text = Clipboard.GetText();
+        }
+
+        private void btnEnCopy_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(txtEnglish.Text);
+        }
+
+        private void btnEnPaste_Click(object sender, EventArgs e)
+        {
+            txtEnglish.Text = Clipboard.GetText();
+        }
+
+        private void btnRootCopy_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(txtEnglishRoot.Text);
+        }
+
+        private void btnRootPaste_Click(object sender, EventArgs e)
+        {
+            txtEnglishRoot.Text = Clipboard.GetText();
         }
     }
 }
